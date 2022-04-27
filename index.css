@@ -10,14 +10,15 @@ body {
   background: url('https://images.unsplash.com/photo-1520466809213-7b9a56adcd45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80')
     no-repeat;
   background-size: cover;
+  background-attachment: fixed;
   width: 100%;
 }
 
 main {
-  /* background-color: rgb(255, 255, 255, 0.5); */
-  /* backdrop-filter: blur(3px); */
-  padding: 1rem;
-  height: 100vh;
+  background: linear-gradient(white, transparent);
+  backdrop-filter: blur(3px);
+  padding-top: 1rem;
+  height: calc(100vh - 3.3rem);
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -37,11 +38,20 @@ nav a {
   color: white;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4 {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: white;
-  width: fit-content;
   padding: 0.5rem 1rem;
+  width: fit-content;
+  background-color: white;
+  margin: 0 auto;
+}
+
+h4 {
+  font-weight: 100;
+  color: lightgray;
 }
 
 p {
@@ -49,20 +59,46 @@ p {
 }
 
 /*............. Buttons ..............*/
-input[type='submit'] {
+
+.btn-primary {
   font-family: 'PT Serif', serif;
   font-size: 0.8rem;
   border: 1px solid black;
   border-radius: 5px;
   padding: 0.5rem 1rem;
   margin: 0.5rem 1rem;
+  background-color: black;
+  color: white;
 }
 
-input[type='submit']:hover {
+.btn-primary:hover {
   transition: all 0.3s;
+  background-color: white;
+  color: black;
 }
 
-input[type='submit']:active {
+.btn-primary:active {
+  transform: translate(0px, 3px);
+}
+
+.btn-second {
+  font-family: 'PT Serif', serif;
+  font-size: 0.8rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  background-color: white;
+  color: black;
+}
+
+.btn-second:hover {
+  transition: all 0.3s;
+  background-color: black;
+  color: white;
+}
+
+.btn-second:active {
   transform: translate(0px, 3px);
 }
 
@@ -71,7 +107,7 @@ input[type='submit']:active {
 .form-container {
   background-color: white;
   padding: 1rem;
-  margin: 1rem auto;
+  margin: 0 auto;
   border-radius: 5px;
   max-width: 400px;
   box-shadow: 0 0 3px rgb(0, 0, 0, 0.5);
@@ -82,16 +118,6 @@ form input {
   margin: 0.5rem 1rem;
   border-radius: 5px;
   border: 1px solid lightgray;
-}
-
-form input[type='submit'] {
-  background-color: black;
-  color: white;
-}
-
-form input[type='submit']:hover {
-  background-color: white;
-  color: black;
 }
 
 /*............ Register ...........*/
@@ -135,4 +161,68 @@ form input[type='submit']:hover {
   height: 2px;
   border-top: 1px solid lightgray;
   margin: 0 1rem;
+}
+
+/*........ Account ........*/
+h2 {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#add-spoiler-label {
+  font-family: 'Source Sans Pro', sans-serif;
+  display: block;
+  background-color: orange;
+  width: calc(80vw + 2rem);
+  font-weight: 900;
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 1rem auto;
+  box-shadow: 0 0 3px rgb(0, 0, 0, 0.5);
+}
+
+#add-spoiler-label:hover {
+  filter: brightness(110%);
+  color: white;
+}
+
+#add-spoiler {
+  display: none;
+}
+
+#title {
+  display: block;
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+#newpost {
+  display: none;
+}
+
+#newpost .post-content {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  min-height: 200px;
+}
+
+:checked + #newpost {
+  display: block;
+}
+
+.post {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  width: fit-content;
+  margin: 1rem auto;
+  box-shadow: 0 0 3px rgb(0, 0, 0, 0.5);
+}
+
+.post-content {
+  width: 80vw;
+  height: fit-content;
+  padding: 1rem;
+  border: none;
 }

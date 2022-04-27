@@ -1,13 +1,4 @@
-<?php 
-//Start session
-session_start();
-$visited = $_SESSION['visited'] ?? null;
-$greeting = $visited ? 'Hello again, friend' : 'Hello, friend';
-$_SESSION['visited'] = true;
-
-//Check if looged in
-$logged_in = $_SESSION['logged_in'] ?? 'Log in';
-
+<?php include './sessions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,8 +16,8 @@ $logged_in = $_SESSION['logged_in'] ?? 'Log in';
             <a href='login.php'><?=$logged_in?></a>
         </nav>
     </header>
-    <main>
+    
         <h1><?= $greeting?></h1>
-    </main>
+    
 </body>
 </html>

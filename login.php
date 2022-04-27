@@ -1,4 +1,7 @@
 <?php include './connection.php';
+    include './sessions.php';
+
+    $_SESSION['logged_in'] = false;
 
     $objectDB = new DBConnect;
     $dbconn = $objectDB ->connect();
@@ -22,6 +25,8 @@
                 //Check if password is correct
                 if($result[0]['password'] == $password){
                     $msg = 'Password is correct';
+                    session_regenerate_id(true);
+                    $_SESSION['logged_in'] = true;
                     header("Location: account.php");
                 } else {
                     $msg = 'Password is incorrect';
@@ -68,7 +73,7 @@
                 <label for='password'></label>
                 <input type='password' name='password' id='password' placeholder='Password' required>
             </div>
-            <input type='submit' name="submit" value='Submit' />
+            <input type='submit' name="submit" value='Submit' class='btn-primary'/>
             <p><?=$msg?></p>
         </form>
         <!--------- Register ----------->
@@ -77,7 +82,7 @@
         <!--------- Show content on click ----->
         <label for='spoiler' id='spoiler-label'>Register
         </label>
-        <input type='checkbox' id='spoiler'/>
+        <input type='checkbox' id='spoiler' class='btn-second'/>
 
             <div class='register-form'>
             <form>
@@ -89,7 +94,7 @@
                     <label for='reg_password'></label>
                     <input type='password' name='password' id='reg_password' placeholder='Password' required>
                 </div>
-                <input type='submit' name='register' value='Submit' />
+                <input type='submit' name='register' value='Submit' class='btn-primary' />
             </form>
             </div>
         </div>
