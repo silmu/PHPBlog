@@ -1,10 +1,11 @@
 <?php include './connection.php';
     include './sessions.php';
     $objectDB = new DBConnect;
-
     $dbconn = $objectDB->connect();
 
-    $selectQuery = "SELECT * FROM posts";
+    //Display all posts that match the user id
+    $userid = $_SESSION['user_id'];
+    $selectQuery = "SELECT * FROM posts where user_id='$userid' ORDER BY created_at desc";
     $stmt = $dbconn->prepare($selectQuery);
     $selectResult = $stmt->execute();
 
@@ -12,8 +13,52 @@
         die('Query selection failed');
     }
 
-    //Display html if user is logged in
-    if($_SESSION['logged_in']){
+    //Send user to login page if not logged in
+    if(!$_SESSION['logged_in']){
+        header("Location: login.php");
+    }
+
+    //Add new post on click
+    if(isset($_POST['addpost'])){
+        //Add sanitization
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $addPostQuery = "INSERT INTO posts (user_id, title, content) VALUES('$userid', '$title', '$content')";
+        $stmt = $dbconn->prepare($addPostQuery);
+        $addPostResult = $stmt->execute();
+
+        if(!$addPostResult) {
+            die('Adding new post query failed');
+        }
+
+        //Reload page
+        header("Location: account.php");
+
+    }
+    if (isset($_POST['deletepost'])){
+        $deleteQuery = "DELETE FROM posts WHERE user_id='{$_SESSION['user_id']}' and content='{$_POST['content']}'";
+        $stmt = $dbconn->prepare($deleteQuery);
+        $deletePostResult = $stmt->execute();
+
+        if(!$deletePostResult) {
+            die('Deleting post query failed');
+        }
+
+        //Reload page
+        header("Location: account.php");
+    }
+    if (isset($_POST['updatepost'])){
+        $updateQuery = "UPDATE posts SET content='{$_POST['content']}' WHERE id='{$_POST['id']}'";
+        $stmt = $dbconn->prepare($updateQuery);
+        $updateResult = $stmt->execute();
+
+        if(!$updateResult) {
+            die('Updating post query failed');
+        }
+
+        //Reload page
+        header("Location: account.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -38,41 +83,46 @@
             <label for='add-spoiler' id='add-spoiler-label'>+ Add new post</label>
             <input type='checkbox' id='add-spoiler'/>
         <!-- Add new post -->
-        <div id='newpost' class='post'>
+        <form id='newpost' method='post' class='post'>
             <label for='title'></label>
-            <input id='title' type='text' placeholder='Title'></input>
-            <textarea class='post-content'></textarea>
+            <input id='title' type='text' name='title' placeholder='Title'></input>
+            <textarea class='post-content'name='content'></textarea>
             <div>
                 <input type='submit' value='Add' name='addpost' class='btn-primary'>
-                <input type='submit' value='Cancel' class='btn-second'>
+                <!-- <input type='button' value='Cancel' class='btn-second' id='canceladd'> 
+                <label for="file-upload" >
+                </label>
+                <input type="file"/> -->
+                
             </div>
-        </div>
-        <h2>History</h2>
+        </form>
         
         <?php
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $id=$row["id"];
             $title = $row["title"];
             $timestamp = $row["created_at"];
             $content = $row["content"];
         
         ?>
-        <div class='post'>
+        <form method='post' class='post'>
+            <input type='hidden' name='id' value=<?=$id?>>
             <h3><?=$title?></h3>
-            <h4><?=$timestamp?></h4>
-            <textarea class='post-content'><?=$content?></textarea>
+            <h4 name="timestamp"><?=$timestamp?></h4>
+            <textarea class='post-content' name='content'><?=$content?></textarea>
             <div>
-                <input type='submit' value='Update' name='update' class='btn-primary'>
-                <input type='submit' value='Cancel' class='btn-second'>
+                <input type='submit' value='Update' name='updatepost' class='btn-primary'>
+                <input type='submit' value='Delete' name='deletepost' class='btn-second'>
+                <!--  <input type='submit' value='Cancel' class='btn-second'>
+                <label for="file-upload">
+                </label>
+                <input type="file"/> -->
+                
             </div>
-        </div>
+        </form>
         
         <?php }; ?>
         
     </main>
 </body>
 </html>
-
-<?php } else { 
-    header("Location: login.php");
-}
-?>

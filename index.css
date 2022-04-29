@@ -66,7 +66,7 @@ p {
   border: 1px solid black;
   border-radius: 5px;
   padding: 0.5rem 1rem;
-  margin: 0.5rem 1rem;
+  /* margin: 1.5rem; */
   background-color: black;
   color: white;
 }
@@ -87,7 +87,7 @@ p {
   border: 1px solid black;
   border-radius: 5px;
   padding: 0.5rem 1rem;
-  margin: 0.5rem 1rem;
+  margin: 0.5rem;
   background-color: white;
   color: black;
 }
@@ -142,7 +142,7 @@ form input {
 }
 
 .register-form {
-  display: none;
+  display: block;
 }
 
 :checked + .register-form {
@@ -225,4 +225,21 @@ h2 {
   height: fit-content;
   padding: 1rem;
   border: none;
+}
+
+input[type='file']::file-selector-button {
+  font-family: 'PT Serif', serif;
+  font-size: 0.8rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  background-color: white;
+  color: black;
+}
+
+input[type='file']::file-selector-button:hover {
+  transition: all 0.3s;
+  background-color: black;
+  color: white;
 }
