@@ -1,5 +1,4 @@
 <?php
-
 class DBConnect {
     private $server = 'db';
     private $dbname = 'blogdb_123';

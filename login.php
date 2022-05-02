@@ -1,24 +1,17 @@
 <?php include './connection.php';
     include './sessions.php';
-
     $_SESSION['logged_in'] = false;
-
-    $objectDB = new DBConnect;
-    $dbconn = $objectDB ->connect();
 
     global $username, $password, $result, $msg, $regmsg;
 
+    include './queries.php';
+
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(isset($_POST['submit'])){
-            
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $checkUser = "SELECT id, password FROM users WHERE username=?";
-
-            $stmt = $dbconn->prepare($checkUser);
-            $stmt->execute([$username]);
-            $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $result = queryOnUser("SELECT id, password FROM users WHERE username=?", $username);
 
             //Check is username exists
             if($result){
@@ -40,37 +33,21 @@
             }
         }
         //Check if username and password match any in a database
-
-        //If they match log in, otherwise display "Username not found" or "Incorrect password" message
         if(isset($_POST['register'])) {
             $regusername = $_POST['reg_username'];
             $regpassword = $_POST['reg_password'];
 
-            $checkUser = "SELECT id, password FROM users WHERE username=?";
-
-            $stmt = $dbconn->prepare($checkUser);
-            $stmt->execute([$regusername]);
-            $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $result = queryOnUser("SELECT id, password FROM users WHERE username=?", $regusername);
 
             //Check is username exists
             if($result){
                 $regmsg = 'Username is taken. Please, enter another username.';
             } else {
-                $regQuery = "INSERT INTO users(username, password) VALUES('$regusername', '$regpassword')";
-
-                $stmt = $dbconn->prepare($regQuery);
-                $stmt->execute();
-
-                // $_SESSION['logged_in'] = true;
-                // $checkUser = "SELECT id FROM users WHERE username='$regusername'";
-                // $stmt = $dbconn->prepare($checkUser);
-                // $stmt->execute([$username]);
-                // $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
-                // $_SESSION['user_id'] = 
+                //Add a new user and password
+                queryCheck("INSERT INTO users(username, password) VALUES('$regusername', '$regpassword')");
 
                 $regmsg = "Registration successful.";
             }
-
         }
     } 
 ?>

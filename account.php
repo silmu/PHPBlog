@@ -1,17 +1,11 @@
 <?php include './connection.php';
     include './sessions.php';
-    $objectDB = new DBConnect;
-    $dbconn = $objectDB->connect();
+    include './queries.php';
 
     //Display all posts that match the user id
     $userid = $_SESSION['user_id'];
     $selectQuery = "SELECT * FROM posts where user_id='$userid' ORDER BY created_at desc";
-    $stmt = $dbconn->prepare($selectQuery);
-    $selectResult = $stmt->execute();
-
-    if(!$selectResult) {
-        die('Query selection failed');
-    }
+    $stmtFetchAll = queryCheck($selectQuery);
 
     //Send user to login page if not logged in
     if(!$_SESSION['logged_in']){
@@ -24,37 +18,21 @@
         $title = $_POST['title'];
         $content = $_POST['content'];
         $addPostQuery = "INSERT INTO posts (user_id, title, content) VALUES('$userid', '$title', '$content')";
-        $stmt = $dbconn->prepare($addPostQuery);
-        $addPostResult = $stmt->execute();
 
-        if(!$addPostResult) {
-            die('Adding new post query failed');
-        }
+        queryCheck($addPostQuery);
 
         //Reload page
         header("Location: account.php");
 
     }
     if (isset($_POST['deletepost'])){
-        $deleteQuery = "DELETE FROM posts WHERE user_id='{$_SESSION['user_id']}' and content='{$_POST['content']}'";
-        $stmt = $dbconn->prepare($deleteQuery);
-        $deletePostResult = $stmt->execute();
-
-        if(!$deletePostResult) {
-            die('Deleting post query failed');
-        }
+        queryCheck("DELETE FROM posts WHERE user_id='{$_SESSION['user_id']}' and content='{$_POST['content']}'");
 
         //Reload page
         header("Location: account.php");
     }
     if (isset($_POST['updatepost'])){
-        $updateQuery = "UPDATE posts SET content='{$_POST['content']}' WHERE id='{$_POST['id']}'";
-        $stmt = $dbconn->prepare($updateQuery);
-        $updateResult = $stmt->execute();
-
-        if(!$updateResult) {
-            die('Updating post query failed');
-        }
+        queryCheck("UPDATE posts SET content='{$_POST['content']}' WHERE id='{$_POST['id']}'");
 
         //Reload page
         header("Location: account.php");
@@ -98,7 +76,7 @@
         </form>
         
         <?php
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while($row = $stmtFetchAll->fetch(PDO::FETCH_ASSOC)){
             $id=$row["id"];
             $title = $row["title"];
             $timestamp = $row["created_at"];
