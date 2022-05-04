@@ -12,11 +12,17 @@
         header("Location: login.php");
     }
 
+    //Sanitization
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
     //Add new post on click
     if(isset($_POST['addpost'])){
-        //Add sanitization
-        $title = $_POST['title'];
-        $content = $_POST['content'];
+        $title = test_input($_POST['title']);
+        $content = test_input($_POST['content']);
         $addPostQuery = "INSERT INTO posts (user_id, title, content) VALUES('$userid', '$title', '$content')";
 
         queryCheck($addPostQuery);
@@ -26,7 +32,8 @@
 
     }
     if (isset($_POST['deletepost'])){
-        queryCheck("DELETE FROM posts WHERE user_id='{$_SESSION['user_id']}' and content='{$_POST['content']}'");
+        $content = test_input($_POST['content']);
+        queryCheck("DELETE FROM posts WHERE user_id='{$_SESSION['user_id']}' and content='{$content}'");
 
         //Reload page
         header("Location: account.php");

@@ -13,11 +13,11 @@ create table posts(
 create table users(
     id integer(11) not null PRIMARY KEY AUTO_INCREMENT,
     username varchar(50) not null,
-    password varchar(50) not null
+    password varchar(225) not null
 );
 
-insert into users (username, password) values('admin','12345');
-insert into users (username, password) values('admin2','678');
+insert into users (username, password) values('admin','$2y$10$8TPxdezukchhytwqBI5PUO.RN1zziBbDWmd4b6EFiUBgjbebO3vY6');
+insert into users (username, password) values('admin2','$2y$10$.Uj37hvvjqgcI64tKuqSbexXqEx3Sjmyt3wWZb8mtEuUOFQ5FZyIi');
 
 insert into posts (user_id, title, content) values (1, 'Day 1', 'Dear diary...');
 
