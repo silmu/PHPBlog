@@ -184,6 +184,7 @@ h2 {
   padding: 1rem;
   margin: 1rem auto;
   box-shadow: 0 0 3px rgb(0, 0, 0, 0.5);
+  max-width: 1200px;
 }
 
 #add-spoiler-label:hover {
@@ -221,13 +222,15 @@ h2 {
   padding: 1rem;
   background-color: white;
   border-radius: 5px;
-  width: fit-content;
+  width: calc(80vw + 2rem);
+  max-width: 1200px;
   margin: 1rem auto;
   box-shadow: 0 0 3px rgb(0, 0, 0, 0.5);
 }
 
 .post-content {
-  width: 80vw;
+  width: 100%;
+  max-width: 1200px;
   height: fit-content;
   padding: 1rem;
   border: none;

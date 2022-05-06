@@ -74,10 +74,10 @@
             <textarea class='post-content'name='content'></textarea>
             <div>
                 <input type='submit' value='Add' name='addpost' class='btn-primary'>
-                <!-- <input type='button' value='Cancel' class='btn-second' id='canceladd'> 
+                 <!-- <input type='button' value='Cancel' class='btn-second' id='canceladd'> 
                 <label for="file-upload" >
-                </label>
-                <input type="file"/> -->
+                </label> -->
+                <!--<input type="file"/> -->
                 
             </div>
         </form>

@@ -1,6 +1,8 @@
 <?php include './connection.php';
     include './sessions.php';
-    $_SESSION['logged_in'] = false;
+    if(isset($_SESSION['logged_in'])){
+        $_SESSION['logged_in'] = false;
+    } 
 
     global $username, $password, $result, $msg, $regmsg;
 

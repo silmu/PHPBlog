@@ -20,9 +20,6 @@ insert into users (username, password) values('admin','$2y$10$8TPxdezukchhytwqBI
 insert into users (username, password) values('admin2','$2y$10$.Uj37hvvjqgcI64tKuqSbexXqEx3Sjmyt3wWZb8mtEuUOFQ5FZyIi');
 
 insert into posts (user_id, title, content) values (1, 'Day 1', 'Dear diary...');
-
 insert into posts (user_id, title, content) values (1, 'Day 2', 'Dear diary...again');
-
 insert into posts (user_id, title, content) values (2, 'Entry 1', 'Some text');
-
 insert into posts (user_id, title, content) values (2, 'Entry 2', 'Some text...again');
